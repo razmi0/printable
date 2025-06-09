@@ -1,4 +1,4 @@
-const ansi = {
+export const colors = {
     reset: "\x1b[0m",
     bold: "\x1b[1m",
     dim: "\x1b[2m",
@@ -44,34 +44,3 @@ const ansi = {
     bgBrightCyan: "\x1b[106m",
     bgBrightWhite: "\x1b[107m",
 };
-
-class Logger {
-    loader: string[];
-    iteration: number;
-    delay: number;
-    msg: string;
-    constructor(config?: { loader: string[]; iteration?: number; delay?: number }, msg: string = "") {
-        this.loader = config?.loader ?? [""];
-        this.iteration = config?.iteration ?? 1;
-        this.delay = config?.delay ?? 1;
-        this.msg = msg;
-    }
-
-    log() {
-        const allFrames = this.loader.length * this.iteration;
-
-        const step = (i: number) => {
-            if (i >= allFrames) return;
-            const frame = this.loader[i % this.loader.length];
-            console.clear();
-            console.log(frame + this.msg);
-            setTimeout(() => step(i + 1), this.delay);
-        };
-
-        step(0);
-    }
-}
-
-const config = { loader: ["•", "◦", "⦿", "⦾", "◉", "◎", "⦾", "⦿", "◦", "•"], iteration: 10, delay: 100 };
-
-new Logger(config, " Loading").log();
